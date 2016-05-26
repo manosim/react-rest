@@ -1,0 +1,28 @@
+{
+  "name": "react-rest",
+  "version": "0.0.1",
+  "description": "A React REST Client.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekonstantinidis/react-rest.git"
+  },
+  "keywords": [
+    "react",
+    "rest",
+    "client",
+    "http",
+    "request",
+    "web",
+    "api"
+  ],
+  "author": "Emmanouil Konstantinidis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ekonstantinidis/react-rest/issues"
+  },
+  "homepage": "https://github.com/ekonstantinidis/react-rest#readme"
+}
