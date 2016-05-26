@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var config = require('./webpack.config.js');
 
-config.debug = true,
 config.devtool = 'source-map',
 
 config.entry = './demo/js/index.js',
@@ -29,10 +28,6 @@ config.plugins = config.plugins.concat([
 ]);
 
 config.module.loaders = config.module.loaders.concat([
-  {
-    test: /\.(eot|ttf|svg|woff|woff2)(\?.*$|$)/,
-    loader: 'file-loader'
-  },
   {
     test: /\.less$/,
     loader: 'style-loader!css-loader!less-loader'
