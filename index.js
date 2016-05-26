@@ -1,7 +1,7 @@
 import React from 'react';
 import superagent from 'superagent';
 
-import RequestUtils = require('./src/components/utils/request');
+import RequestUtils from './src/utils/request';
 import Request from './src/components/request';
 import Response from './src/components/response';
 
@@ -58,10 +58,7 @@ export default class LiveAPIEndpoints extends React.Component{
               <Response payload={this.state.response} />
             </div>
           </div>
-        </div>
 
-        <div className="modal-footer">
-          <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
           <button type="submit" className="btn btn-primary">Send</button>
         </div>
       </form>

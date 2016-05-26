@@ -1,4 +1,4 @@
-require('../src/less/style.less');
+require('../less/style.less');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -7,7 +7,7 @@ import LiveAPIEndpoints from '../../index';
 
 const data = {
   path: 'http://swapi.co/api/people/1/',
-  methods: ['GET', 'OPTIONS'],
+  methods: ['GET'],
   fields: []
 };
 
