@@ -1,0 +1,50 @@
+{
+  "name": "react-rest",
+  "version": "0.0.1",
+  "description": "A React REST Client.",
+  "main": "index.js",
+  "scripts": {
+    "build:demo": "webpack --config webpack.config.demo.js",
+    "watch:demo": "webpack --config webpack.config.demo.js --progress --colors --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekonstantinidis/react-rest.git"
+  },
+  "keywords": [
+    "react",
+    "rest",
+    "client",
+    "http",
+    "request",
+    "web",
+    "api"
+  ],
+  "author": "Emmanouil Konstantinidis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ekonstantinidis/react-rest/issues"
+  },
+  "homepage": "https://github.com/ekonstantinidis/react-rest#readme",
+  "peerDependencies": {
+    "react": "^15.x.x",
+    "react-dom": "^15.x.x",
+    "superagent": "^1.8.x",
+    "underscore": "^1.8.x"
+  },
+  "devDependencies": {
+    "babel-loader": "=6.2.4",
+    "babel-preset-es2015": "=6.9.0",
+    "babel-preset-react": "=6.5.0",
+    "bootstrap": "=3.3.6",
+    "css-loader": "=0.23.1",
+    "less": "=2.7.1",
+    "less-loader": "=2.2.3",
+    "react": "=15.1.0",
+    "react-dom": "=15.1.0",
+    "style-loader": "=0.13.1",
+    "superagent": "=1.8.2",
+    "webpack": "=1.13.1"
+  }
+}
