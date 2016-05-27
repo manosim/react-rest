@@ -10,12 +10,11 @@ export default class LiveAPIEndpoints extends React.Component {
     super(props);
 
     this.state = {
-      // methods: this.props.endpoint,
-      url: this.props.endpoint.url,
-      methods: this.props.endpoint.methods || [],
-      fields: this.props.endpoint.fields || [],
-      permissions: this.props.endpoint.permissions || [],
-      selectedMethod: this.props.endpoint.methods ? this.props.endpoint.methods[0] : null,
+      url: props.endpoint.url,
+      methods: props.endpoint.methods || [],
+      fields: props.endpoint.fields || [],
+      permissions: props.endpoint.permissions || [],
+      selectedMethod: props.endpoint.methods ? props.endpoint.methods[0] : null,
       response: null
     };
   }
