@@ -103,7 +103,7 @@ export default class LiveAPIEndpoints extends React.Component {
         <Methods
           methods={this.props.methods}
           selectedMethod={this.props.selectedMethod}
-          setMethod={(value) => this.props.selectedMethod(value)} />
+          setMethod={(value) => this.props.onSelectMethod(value)} />
 
         <Headers
           headers={this.state.headers}

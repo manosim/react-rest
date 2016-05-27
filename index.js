@@ -42,7 +42,7 @@ export default class LiveAPIEndpoints extends React.Component{
     var data = this.getData(method);
 
     // Now Make the Request
-    APIRequest(method, this.state.url)
+    superagent(method, this.state.url)
       .set(headers)
       .send(data)
       .end(function (err, res) {
@@ -53,8 +53,6 @@ export default class LiveAPIEndpoints extends React.Component{
   }
 
   selectMethod(value) {
-    console.log('SELECTED: ', value);
-
     this.setState({
       selectedMethod: value
     });
@@ -62,7 +60,7 @@ export default class LiveAPIEndpoints extends React.Component{
 
   render () {
     return (
-      <form className="form-horizontal" onSubmit={() => this.makeRequest()}>
+      <form className="form-horizontal" onSubmit={(evt) => this.makeRequest(evt)}>
         <div className="modal-body">
           <div className="row">
             <div className="col-md-6 request">

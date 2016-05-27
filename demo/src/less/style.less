@@ -55,6 +55,18 @@
 @import "../../../node_modules/bootstrap/less/responsive-utilities.less";
 
 
+/* @group Colors */
+
+@GetColor: #18bc9c;
+@PostColor: #f39c12;
+@PutColor: #028d94;
+@PatchColor: #028d94;
+@DeleteColor: #e74c3c;
+@OptionsColor: #3498db;
+
+/* @end Colors */
+
+
 /* @group Bootstrap Overrides */
 
 @navbar-border-radius: 0;
@@ -70,3 +82,36 @@
 // }
 
 /* @end Jumbotron */
+
+
+/* @group Request */
+
+.request {
+
+  .method {
+     &.get { background-color: @GetColor; }
+     &.post { background-color: @PostColor; }
+     &.patch { background-color: @PutColor; }
+     &.put { background-color: @PatchColor; }
+     &.delete { background-color: @DeleteColor; }
+     &.options { background-color: @OptionsColor; }
+   }
+}
+/* @end Request */
+
+
+/* @group Response */
+
+.response {
+
+  .status-code {
+    font-weight: 300;
+
+    &.status-code-1 { background-color: @brand-info; }
+    &.status-code-2 { background-color: @brand-success; }
+    &.status-code-3 { background-color: @brand-warning; }
+    &.status-code-4 { background-color: @brand-danger; }
+    &.status-code-5 { background-color: @brand-primary; }
+  }
+}
+/* @end Response */
