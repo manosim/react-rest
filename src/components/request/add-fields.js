@@ -28,9 +28,9 @@ export default class AddFieldsForm extends React.Component {
     }
   }
 
-  handleChange(event) {
+  handleChange(value) {
     this.setState({
-      fieldName: event.target.value
+      fieldName: value
     });
   }
 
@@ -51,17 +51,14 @@ export default class AddFieldsForm extends React.Component {
               className="form-control input-sm"
               placeholder="ie. email_address"
               onKeyPress = {this.handleKeyPress}
-              onChange={this.handleChange}
+              onChange={(evt) => this.handleChange(evt.target.value)}
               value={this.state.fieldName} />
           </div>
 
           <div className="col-sm-2">
             <button
-              type="button"
-              className="btn btn-sm btn-block btn-info"
-              onClick={this.addField}>
-              Add
-            </button>
+              type="button" className="btn btn-sm btn-block btn-info"
+              onClick={() => this.addField()}>Add</button>
           </div>
         </div>
       </div>

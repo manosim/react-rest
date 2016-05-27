@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import React from 'react';
 import superagent from 'superagent';
 
@@ -16,6 +17,23 @@ export default class LiveAPIEndpoints extends React.Component {
       selectedMethod: props.methods ? props.methods[0] : null,
       response: null
     };
+  }
+
+  addField(fieldName) {
+    // Check if field already exists
+    const fields = this.state.fields;
+    if (_.findWhere(fields, {'name': fieldName})) { return; }
+
+    fields.push({
+      name: fieldName,
+      required: false,
+      type: 'text',
+      isCustom: true
+    });
+
+    this.setState({
+      fields: fields
+    });
   }
 
   getData(method) {
@@ -73,6 +91,7 @@ export default class LiveAPIEndpoints extends React.Component {
               onUrlChange={(value) => this.handleUrlChange(value)}
               permissions={this.state.permissions}
               fields={this.state.fields}
+              onAddField={(name) => this.addField(name)}
               methods={this.props.methods}
               selectedMethod={this.state.selectedMethod}
               onSelectMethod={(value) => this.selectMethod(value)} />

@@ -29,24 +29,6 @@ export default class Request extends React.Component {
     });
   }
 
-  addField(fieldName) {
-    var endpoint = this.state.endpoint;
-
-    // Check if field already exists
-    if (_.findWhere(endpoint.fields, {'name': fieldName})) { return; }
-
-    endpoint.fields.push({
-      name: fieldName,
-      required: false,
-      type: 'text',
-      isCustom: true
-    });
-
-    this.setState({
-      endpoint: endpoint
-    });
-  }
-
   removeField(fieldName) {
     var data = this.state.data;
     var endpoint = this.state.endpoint;
@@ -108,7 +90,7 @@ export default class Request extends React.Component {
 
         <AddFieldsForm
           selectedMethod={this.props.selectedMethod}
-          onAdd={this.addField} />
+          onAdd={(name) => this.props.onAddField(name)} />
       </div>
     );
   }
@@ -118,4 +100,5 @@ Request.propTypes = {
   onUrlChange: PropTypes.func.isRequired,
   methods: PropTypes.array.isRequired,
   selectedMethod: PropTypes.string.isRequired,
+  onAddField: PropTypes.func.isRequired
 };
