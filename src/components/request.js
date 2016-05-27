@@ -1,5 +1,4 @@
-import _ from 'underscore';
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 import AddFieldsForm from './request/add-fields';
 import Headers from './request/headers';
@@ -29,53 +28,12 @@ export default class Request extends React.Component {
     });
   }
 
-  addField(fieldName) {
-    var endpoint = this.state.endpoint;
-
-    // Check if field already exists
-    if (_.findWhere(endpoint.fields, {'name': fieldName})) { return; }
-
-    endpoint.fields.push({
-      name: fieldName,
-      required: false,
-      type: 'text',
-      isCustom: true
-    });
-
-    this.setState({
-      endpoint: endpoint
-    });
-  }
-
-  removeField(fieldName) {
-    var data = this.state.data;
-    var endpoint = this.state.endpoint;
-    var fields = endpoint.fields;
-
-    data = _.omit(data, fieldName);
-    fields = _.without(fields, _.findWhere(fields, {name: fieldName}));
-    endpoint.fields = fields;
-
-    this.setState({
-      data: data,
-      endpoint: endpoint
-    });
-  }
-
   handleHeaderChange(value, fieldName) {
     var headers = this.state.headers;
     headers[fieldName] = value;
 
     this.setState({
       headers: headers
-    });
-  }
-
-  handleDataFieldChange(value, fieldName) {
-    var data = this.state.data;
-    data[fieldName] = value;
-    this.setState({
-      data: data
     });
   }
 
@@ -103,19 +61,21 @@ export default class Request extends React.Component {
           selectedMethod={this.props.selectedMethod}
           fields={this.props.fields}
           data={this.state.data}
-          removeCustomField={this.removeField}
-          onChange={this.handleDataFieldChange} />
+          removeField={(fieldName) => this.props.onRemoveField(fieldName)}
+          onFieldChange={(value, fieldName) => this.props.handleFieldChange(value, fieldName)} />
 
         <AddFieldsForm
           selectedMethod={this.props.selectedMethod}
-          onAdd={this.addField} />
+          onAdd={(name) => this.props.onAddField(name)} />
       </div>
     );
   }
 };
 
 Request.propTypes = {
-  onUrlChange: PropTypes.func.isRequired,
-  methods: PropTypes.array.isRequired,
-  selectedMethod: PropTypes.string.isRequired,
+  onUrlChange: React.PropTypes.func.isRequired,
+  methods: React.PropTypes.array.isRequired,
+  selectedMethod: React.PropTypes.string.isRequired,
+  onAddField: React.PropTypes.func.isRequired,
+  onRemoveField: React.PropTypes.func.isRequired
 };

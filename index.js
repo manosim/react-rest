@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import React from 'react';
 import superagent from 'superagent';
 
@@ -14,13 +15,50 @@ export default class LiveAPIEndpoints extends React.Component {
       fields: props.fields || [],
       permissions: props.endpoint.permissions || [],
       selectedMethod: props.methods ? props.methods[0] : null,
+      data: {},
       response: null
     };
   }
 
+  addField(fieldName) {
+    // Check if field already exists
+    const fields = this.state.fields;
+    if (_.findWhere(fields, {'name': fieldName})) { return; }
+
+    fields.push({
+      name: fieldName,
+      required: false,
+      type: 'text',
+      isCustom: true
+    });
+
+    this.setState({
+      fields: fields
+    });
+  }
+
+  removeField(fieldName) {
+    const fields = _.without(this.state.fields, _.findWhere(this.state.fields, {name: fieldName}));
+    const data = _.omit(this.state.data, fieldName);
+
+    this.setState({
+      data: data,
+      fields: fields
+    });
+  }
+
+  handleDataFieldChange(value, fieldName) {
+    const data = this.state.data;
+    data[fieldName] = value;
+
+    this.setState({
+      data: data
+    });
+  }
+
   getData(method) {
     return RequestUtils.shouldIncludeData(method) ? (
-      this.refs.request.state.data
+      this.state.data
     ) : null;
   }
 
@@ -28,22 +66,18 @@ export default class LiveAPIEndpoints extends React.Component {
     event.preventDefault();
 
     var self = this;
-    // FIXME!
-    // const request = this.refs.request.state;
-    // const request = {};
     const method = this.state.selectedMethod;
 
+    // FIXME!
     const headers = {};
     // if (this.refs.request.state.headers.authorization) {
     //   headers['Authorization'] = this.refs.request.state.headers.authorization;
     // };
 
-    var data = this.getData(method);
-
     // Now Make the Request
     superagent(method, this.state.url)
       .set(headers)
-      .send(data)
+      .send(this.getData(method))
       .end(function (err, res) {
         self.setState({
           response: res
@@ -73,6 +107,9 @@ export default class LiveAPIEndpoints extends React.Component {
               onUrlChange={(value) => this.handleUrlChange(value)}
               permissions={this.state.permissions}
               fields={this.state.fields}
+              handleFieldChange={(value, fieldName) => this.handleDataFieldChange(value, fieldName)}
+              onAddField={(name) => this.addField(name)}
+              onRemoveField={(name) => this.removeField(name)}
               methods={this.props.methods}
               selectedMethod={this.state.selectedMethod}
               onSelectMethod={(value) => this.selectMethod(value)} />

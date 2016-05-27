@@ -6,16 +6,8 @@ import Header from '../helpers/header';
 import RequestUtils from '../../utils/request';
 
 export default class Data extends React.Component {
-  removeCustomField(fieldName) {
-    this.props.removeCustomField(fieldName);
-  }
-
   handleBooleanChange(fieldName, value) {
     this.props.onChange(value, fieldName);
-  }
-
-  handleTextChange(fieldName, event) {
-    this.props.onChange(event.target.value, fieldName);
   }
 
   _renderBooleanField(field, key) {
@@ -27,8 +19,6 @@ export default class Data extends React.Component {
         name={field.name}
         value={value}
         required={field.required ? 'required' : false}
-        removeField={this.removeCustomField}
-        isCustom={field.isCustom ? 'isCustom' : false}
         onChange={this.handleBooleanChange.bind(this, field.name)} />
     );
   }
@@ -44,9 +34,9 @@ export default class Data extends React.Component {
         value={value}
         placeholder={field.type}
         required={field.required ? 'required' : false}
-        removeField={this.removeCustomField}
+        removeField={(fieldName) => this.props.removeField(fieldName)}
         isCustom={field.isCustom ? 'isCustom' : false}
-        onChange={this.handleTextChange.bind(this, field.name)} />
+        onChange={(val) => this.props.onFieldChange(val, field.name)} />
     );
   }
 
@@ -80,5 +70,6 @@ export default class Data extends React.Component {
 };
 
 Data.propTypes = {
-  selectedMethod: React.PropTypes.string.isRequired
+  selectedMethod: React.PropTypes.string.isRequired,
+  onFieldChange: React.PropTypes.func.isRequired
 };
