@@ -37,14 +37,6 @@ export default class Request extends React.Component {
     });
   }
 
-  handleDataFieldChange(value, fieldName) {
-    var data = this.state.data;
-    data[fieldName] = value;
-    this.setState({
-      data: data
-    });
-  }
-
   render() {
     return (
       <div className="col-md-6 request">
@@ -70,7 +62,7 @@ export default class Request extends React.Component {
           fields={this.props.fields}
           data={this.state.data}
           removeField={(fieldName) => this.props.onRemoveField(fieldName)}
-          onChange={this.handleDataFieldChange} />
+          onFieldChange={(value, fieldName) => this.props.handleFieldChange(value, fieldName)} />
 
         <AddFieldsForm
           selectedMethod={this.props.selectedMethod}

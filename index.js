@@ -15,7 +15,7 @@ export default class LiveAPIEndpoints extends React.Component {
       fields: props.fields || [],
       permissions: props.endpoint.permissions || [],
       selectedMethod: props.methods ? props.methods[0] : null,
-      data: null,
+      data: {},
       response: null
     };
   }
@@ -47,9 +47,18 @@ export default class LiveAPIEndpoints extends React.Component {
     });
   }
 
+  handleDataFieldChange(value, fieldName) {
+    const data = this.state.data;
+    data[fieldName] = value;
+
+    this.setState({
+      data: data
+    });
+  }
+
   getData(method) {
     return RequestUtils.shouldIncludeData(method) ? (
-      this.refs.request.state.data
+      this.state.data
     ) : null;
   }
 
@@ -57,22 +66,18 @@ export default class LiveAPIEndpoints extends React.Component {
     event.preventDefault();
 
     var self = this;
-    // FIXME!
-    // const request = this.refs.request.state;
-    // const request = {};
     const method = this.state.selectedMethod;
 
+    // FIXME!
     const headers = {};
     // if (this.refs.request.state.headers.authorization) {
     //   headers['Authorization'] = this.refs.request.state.headers.authorization;
     // };
 
-    var data = this.getData(method);
-
     // Now Make the Request
     superagent(method, this.state.url)
       .set(headers)
-      .send(data)
+      .send(this.getData(method))
       .end(function (err, res) {
         self.setState({
           response: res
@@ -102,6 +107,7 @@ export default class LiveAPIEndpoints extends React.Component {
               onUrlChange={(value) => this.handleUrlChange(value)}
               permissions={this.state.permissions}
               fields={this.state.fields}
+              handleFieldChange={(value, fieldName) => this.handleDataFieldChange(value, fieldName)}
               onAddField={(name) => this.addField(name)}
               onRemoveField={(name) => this.removeField(name)}
               methods={this.props.methods}

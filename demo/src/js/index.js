@@ -13,7 +13,7 @@ const data = {
 // const methods = ['GET', 'OPTIONS'];
 // const fields = [];
 
-const url = 'http://demo.drfdocs.com/accounts/login/';
+const url = 'http://0.0.0.0:8000/api/accounts/register/';
 const methods = ['POST', 'OPTIONS'];
 const fields = [
   {
@@ -23,6 +23,16 @@ const fields = [
   },
   {
     name: 'password',
+    type: 'CharField',
+    required: true
+  },
+  {
+    name: 'email',
+    type: 'CharField',
+    required: true
+  },
+  {
+    name: 'full_name',
     type: 'CharField',
     required: true
   }
