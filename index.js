@@ -15,6 +15,7 @@ export default class LiveAPIEndpoints extends React.Component {
       fields: props.fields || [],
       permissions: props.endpoint.permissions || [],
       selectedMethod: props.methods ? props.methods[0] : null,
+      data: null,
       response: null
     };
   }
@@ -32,6 +33,16 @@ export default class LiveAPIEndpoints extends React.Component {
     });
 
     this.setState({
+      fields: fields
+    });
+  }
+
+  removeField(fieldName) {
+    const fields = _.without(this.state.fields, _.findWhere(this.state.fields, {name: fieldName}));
+    const data = _.omit(this.state.data, fieldName);
+
+    this.setState({
+      data: data,
       fields: fields
     });
   }
@@ -92,6 +103,7 @@ export default class LiveAPIEndpoints extends React.Component {
               permissions={this.state.permissions}
               fields={this.state.fields}
               onAddField={(name) => this.addField(name)}
+              onRemoveField={(name) => this.removeField(name)}
               methods={this.props.methods}
               selectedMethod={this.state.selectedMethod}
               onSelectMethod={(value) => this.selectMethod(value)} />

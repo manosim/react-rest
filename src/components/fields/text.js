@@ -2,11 +2,6 @@ import React from 'react';
 
 export default class FieldText extends React.Component {
 
-  removeField(fieldName, event) {
-    event.preventDefault();
-    this.props.removeField(fieldName);
-  }
-
   render() {
     const labelName = this.props.name.replace('_', ' ');
 
@@ -16,11 +11,13 @@ export default class FieldText extends React.Component {
           htmlFor={this.props.name}
           className="col-sm-4 control-label">
             {this.props.isCustom ? (
-              <i
-                className="fa fa-minus-circle"
+              <button
+                type="button"
+                className="btn btn-link"
                 title="Remove Field"
-                onClick={this.removeField.bind(this, this.props.name)}
-                />
+                onClick={() => this.props.removeField(this.props.name)}>
+                ✘
+              </button>
             ) : null}
             {labelName}
         </label>

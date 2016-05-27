@@ -27,8 +27,6 @@ export default class Data extends React.Component {
         name={field.name}
         value={value}
         required={field.required ? 'required' : false}
-        removeField={this.removeCustomField}
-        isCustom={field.isCustom ? 'isCustom' : false}
         onChange={this.handleBooleanChange.bind(this, field.name)} />
     );
   }
@@ -44,7 +42,7 @@ export default class Data extends React.Component {
         value={value}
         placeholder={field.type}
         required={field.required ? 'required' : false}
-        removeField={this.removeCustomField}
+        removeField={(fieldName) => this.props.removeField(fieldName)}
         isCustom={field.isCustom ? 'isCustom' : false}
         onChange={this.handleTextChange.bind(this, field.name)} />
     );

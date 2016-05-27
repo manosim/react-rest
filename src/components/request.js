@@ -1,5 +1,4 @@
-import _ from 'underscore';
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 import AddFieldsForm from './request/add-fields';
 import Headers from './request/headers';
@@ -26,21 +25,6 @@ export default class Request extends React.Component {
     this.setState({
       endpoint: endpoint,
       headers: headers
-    });
-  }
-
-  removeField(fieldName) {
-    var data = this.state.data;
-    var endpoint = this.state.endpoint;
-    var fields = endpoint.fields;
-
-    data = _.omit(data, fieldName);
-    fields = _.without(fields, _.findWhere(fields, {name: fieldName}));
-    endpoint.fields = fields;
-
-    this.setState({
-      data: data,
-      endpoint: endpoint
     });
   }
 
@@ -85,7 +69,7 @@ export default class Request extends React.Component {
           selectedMethod={this.props.selectedMethod}
           fields={this.props.fields}
           data={this.state.data}
-          removeCustomField={this.removeField}
+          removeField={(fieldName) => this.props.onRemoveField(fieldName)}
           onChange={this.handleDataFieldChange} />
 
         <AddFieldsForm
@@ -97,8 +81,9 @@ export default class Request extends React.Component {
 };
 
 Request.propTypes = {
-  onUrlChange: PropTypes.func.isRequired,
-  methods: PropTypes.array.isRequired,
-  selectedMethod: PropTypes.string.isRequired,
-  onAddField: PropTypes.func.isRequired
+  onUrlChange: React.PropTypes.func.isRequired,
+  methods: React.PropTypes.array.isRequired,
+  selectedMethod: React.PropTypes.string.isRequired,
+  onAddField: React.PropTypes.func.isRequired,
+  onRemoveField: React.PropTypes.func.isRequired
 };
