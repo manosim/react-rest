@@ -1,18 +1,18 @@
-var React = require('react');
+import React from 'react';
 
-var FieldText = React.createClass({
+export default class FieldText extends React.Component {
 
-  removeField: function (fieldName, event) {
+  removeField(fieldName, event) {
     event.preventDefault();
     this.props.removeField(fieldName);
-  },
+  }
 
-  handleChange: function (value) {
+  handleChange(value) {
     this.props.onChange(value);
-  },
+  }
 
-  render: function () {
-    var labelName = this.props.name.replace('_', ' ');
+  render() {
+    const labelName = this.props.name.replace('_', ' ');
 
     return (
       <div className="form-group">
@@ -21,8 +21,8 @@ var FieldText = React.createClass({
           className="col-sm-4 control-label">
             {this.props.isCustom ? (
               <i
-                className='fa fa-minus-circle'
-                title='Remove Field'
+                className="fa fa-minus-circle"
+                title="Remove Field"
                 onClick={this.removeField.bind(this, this.props.name)}
                 />
             ) : null}
@@ -41,6 +41,4 @@ var FieldText = React.createClass({
       </div>
     );
   }
-});
-
-module.exports = FieldText;
+};

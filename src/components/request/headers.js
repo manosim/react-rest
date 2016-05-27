@@ -1,43 +1,43 @@
-var React = require('react');
+import React from 'react';
 
-var Header = require('../helpers/header');
-var FieldText = require('../fields/text');
-var RequestUtils = require('../../utils/request');
+import Header from '../helpers/header';
+import FieldText from '../fields/text';
+import RequestUtils from '../../utils/request';
 
-var Headers = React.createClass({
+export default class Headers extends React.Component {
 
-  getInitialState: function() {
-    return {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       authorization: this.props.headers.authorization
     };
-  },
+  }
 
-  handleChange: function (fieldName, event) {
+  handleChange(fieldName, event) {
     this.props.handleHeaderChange(event.target.value, fieldName);
-  },
+  }
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       authorization: nextProps.headers.authorization
     });
-  },
+  }
 
-  render: function () {
+  render() {
     if (!RequestUtils.shouldAddHeader(this.props.permissions)) {
       return null;
     }
 
     return (
       <div>
-        <Header title='Headers' />
+        <Header title="Headers" />
         <FieldText
-          name='authorization'
+          name="authorization"
           value={this.state.authorization}
-          placeholder='Token 1234567890'
+          placeholder="Token 1234567890"
           onChange={this.handleChange.bind(this, 'authorization')} />
       </div>
     );
   }
-});
-
-module.exports = Headers;
+};

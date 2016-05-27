@@ -1,24 +1,24 @@
-var React = require('react');
+import React from 'react';
 
-var FieldText = require('../fields/text');
-var FieldBoolean = require('../fields/boolean');
-var Header = require('../helpers/header');
-var RequestUtils = require('../../utils/request');
+import FieldText from '../fields/text';
+import FieldBoolean from '../fields/boolean';
+import Header from '../helpers/header';
+import RequestUtils from '../../utils/request';
 
-var Data = React.createClass({
-  removeCustomField: function (fieldName) {
+export default class Data extends React.Component {
+  removeCustomField(fieldName) {
     this.props.removeCustomField(fieldName);
-  },
+  }
 
-  handleBooleanChange: function (fieldName, value) {
+  handleBooleanChange(fieldName, value) {
     this.props.onChange(value, fieldName);
-  },
+  }
 
-  handleTextChange: function (fieldName, event) {
+  handleTextChange(fieldName, event) {
     this.props.onChange(event.target.value, fieldName);
-  },
+  }
 
-  _renderBooleanField: function (field, key) {
+  _renderBooleanField(field, key) {
     var value = this.props.data[field.name];
 
     return (
@@ -31,11 +31,11 @@ var Data = React.createClass({
         isCustom={field.isCustom ? 'isCustom' : false}
         onChange={this.handleBooleanChange.bind(this, field.name)} />
     );
-  },
+  }
 
-  _renderTextInput: function (field, key) {
+  _renderTextInput(field, key) {
     var value = this.props.data[field.name];
-    var type = field.name == 'password' ? 'password' : 'text';
+    var type = field.name === 'password' ? 'password' : 'text';
     return (
       <FieldText
         key={key}
@@ -48,35 +48,33 @@ var Data = React.createClass({
         isCustom={field.isCustom ? 'isCustom' : false}
         onChange={this.handleTextChange.bind(this, field.name)} />
     );
-  },
+  }
 
-  _renderFields: function () {
+  _renderFields() {
     return this.props.fields.map(function (field, key) {
 
       switch (field.type) {
-      case ('BooleanField'):
-        return this._renderBooleanField(field, key);
+        case ('BooleanField'):
+          return this._renderBooleanField(field, key);
 
-      case ('CharField'):
-      default:
-        return this._renderTextInput(field, key);
-
+        case ('CharField'):
+          // FIXME!
+        default:
+          return this._renderTextInput(field, key);
       }
     }, this);
-  },
+  }
 
-  render: function () {
+  render() {
     if (!RequestUtils.shouldIncludeData(this.props.method)) {
       return null;
     }
 
     return (
       <div>
-        {this.props.fields.length ? <Header title='Data' /> : null}
+        {this.props.fields.length ? <Header title="Data" /> : null}
         {this._renderFields()}
       </div>
     );
   }
-});
-
-module.exports = Data;
+};

@@ -1,9 +1,9 @@
 require('../less/style.less');
 
-import React from 'react';
+import React from 'react'; //eslint-disable-line no-unused-vars
 import ReactDOM from 'react-dom';
 
-import LiveAPIEndpoints from '../../index';
+import LiveAPIEndpoints from '../../../index.js';
 
 const data = {
   path: 'http://swapi.co/api/people/1/',

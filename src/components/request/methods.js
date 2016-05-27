@@ -1,45 +1,48 @@
-var React = require('react');
-var Header = require('../helpers/header');
+import React from 'react';
 
-var Methods = React.createClass({
+import Header from '../helpers/header';
 
-  getInitialState: function() {
-    return {
+export default class Methods extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
       methods: [],
       selectedMethod: null
     };
-  },
+  }
 
-  componentWillMount: function() {
+  componentWillMount() {
     this.setState({
       methods: this.props.methods,
       selectedMethod: this.props.selectedMethod
     });
-  },
+  }
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       methods: nextProps.methods,
       selectedMethod: nextProps.selectedMethod
     });
-  },
+  }
 
-  setMethod: function (value) {
+  setMethod(value) {
     this.props.setMethod(value);
-  },
+  }
 
-  render: function () {
+  render() {
     return (
-      <div className='text-center'>
-        <Header title='Method' />
-        <div className='btn-group methods'>
+      <div className="text-center">
+        <Header title="Method" />
+        <div className="btn-group methods">
           {this.state.methods.map(function (method, i) {
-            var methodClass = 'btn btn-sm method ' + method.toLowerCase() +
-              (this.state.selectedMethod == method ? ' active' : null);
+            const methodClass = 'btn btn-sm method ' + method.toLowerCase() +
+              (this.state.selectedMethod === method ? ' active' : null);
             return (
               <button
                 key={i}
-                type='button'
+                type="button"
                 className={methodClass}
                 onClick={this.setMethod.bind(this, method)}>{method}</button>
             );
@@ -48,6 +51,4 @@ var Methods = React.createClass({
       </div>
     );
   }
-});
-
-module.exports = Methods;
+};

@@ -1,31 +1,33 @@
-var React = require('react');
+import React from 'react';
 
 var JSONpp = require('../utils/jsonpp');
 
-var Response = React.createClass({
+export default class Response extends React.Component {
 
-  getInitialState: function () {
-    return {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       payload: this.props.payload,
     };
-  },
+  }
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       payload: nextProps.payload
     });
-  },
+  }
 
-  saveToken: function () {
+  saveToken() {
     window.token = 'Token ' + this.state.payload.body.token;
-  },
+  }
 
-  render: function () {
+  render() {
     if (!this.state.payload) {
       return (
         <div>
           <h3>Response</h3>
-          <p className='lead text-center'>Awaiting request...</p>
+          <p className="lead text-center">Awaiting request...</p>
         </div>
       );
     }
@@ -40,13 +42,13 @@ var Response = React.createClass({
       <div>
         <h3>Response <span className={statusCodeClass}>{this.props.payload.status}</span></h3>
 
-        <div><strong>Status</strong>: <span className='status-text'>{statusText}</span></div>
+        <div><strong>Status</strong>: <span className="status-text">{statusText}</span></div>
         <pre><code dangerouslySetInnerHTML={{__html: responseJSON}}></code></pre>
 
         {hasToken ? (
-          <div className='well well-default text-center'>
-            <button className='btn btn-sm btn-info' onClick={this.saveToken}>
-              <i className='fa fa-key' /> Save Token
+          <div className="well well-default text-center">
+            <button className="btn btn-sm btn-info" onClick={this.saveToken}>
+              <i className="fa fa-key" /> Save Token
           </button>
             <h6>Your token will be lost when you refresh the page.</h6>
           </div>
@@ -54,6 +56,4 @@ var Response = React.createClass({
       </div>
     );
   }
-});
-
-module.exports = Response;
+};

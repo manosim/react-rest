@@ -5,7 +5,7 @@ import RequestUtils from './src/utils/request';
 import Request from './src/components/request';
 import Response from './src/components/response';
 
-export default class LiveAPIEndpoints extends React.Component{
+export default class LiveAPIEndpoints extends React.Component {
   constructor(props) {
     super(props);
 
@@ -30,8 +30,9 @@ export default class LiveAPIEndpoints extends React.Component{
     event.preventDefault();
 
     var self = this;
+    // FIXME!
     // const request = this.refs.request.state;
-    const request = {};
+    // const request = {};
     const method = this.state.selectedMethod;
 
     const headers = {};
@@ -73,6 +74,7 @@ export default class LiveAPIEndpoints extends React.Component{
                 selectedMethod={this.state.selectedMethod}
                 onSelectMethod={(value) => this.selectMethod(value)} />
             </div>
+
             <div className="col-md-6 response">
               <Response payload={this.state.response} />
             </div>

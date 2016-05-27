@@ -1,13 +1,13 @@
 import _ from 'underscore';
 import React from 'react';
 
-var AddFieldsForm = require('./request/add-fields');
-var Headers = require('./request/headers');
-var Data = require('./request/data');
-var FieldUrl = require('./request/field-url');
-var Methods = require('./request/methods');
+import AddFieldsForm from './request/add-fields';
+import Headers from './request/headers';
+import Data from './request/data';
+import FieldUrl from './request/field-url';
+import Methods from './request/methods';
 
-export default class LiveAPIEndpoints extends React.Component {
+export default class Request extends React.Component {
   constructor(props) {
     super(props);
 
@@ -33,7 +33,7 @@ export default class LiveAPIEndpoints extends React.Component {
     var endpoint = this.state.endpoint;
 
     // Check if field already exists
-    if (_.findWhere(endpoint.fields, {'name': fieldName})) return;
+    if (_.findWhere(endpoint.fields, {'name': fieldName})) { return; }
 
     endpoint.fields.push({
       name: fieldName,
@@ -89,14 +89,12 @@ export default class LiveAPIEndpoints extends React.Component {
   }
 
   render() {
-    var endpoint = this.state.endpoint;
-
     return (
       <div>
         <h3>Request</h3>
 
         <FieldUrl
-          name='urlEndpoint'
+          name="urlEndpoint"
           url={this.props.url}
           onChange={this.handleUrlChange} />
 
