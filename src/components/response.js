@@ -3,27 +3,12 @@ import React from 'react';
 var JSONpp = require('../utils/jsonpp');
 
 export default class Response extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      payload: this.props.payload,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      payload: nextProps.payload
-    });
-  }
-
   saveToken() {
-    window.token = 'Token ' + this.state.payload.body.token;
+    window.token = 'Token ' + this.props.payload.body.token;
   }
 
   render() {
-    if (!this.state.payload) {
+    if (!this.props.payload) {
       return (
         <div>
           <h3>Response</h3>
@@ -32,10 +17,10 @@ export default class Response extends React.Component {
       );
     }
 
-    var responseJSON = JSONpp.prettyPrint(this.state.payload.body);
-    var hasToken = this.state.payload.body ? this.state.payload.body.hasOwnProperty('token') : false;
-    var statusText = this.state.payload.statusText.toLowerCase();
-    var statusCodeFirstChar = String(this.state.payload.status).charAt(0);
+    var responseJSON = JSONpp.prettyPrint(this.props.payload.body);
+    var hasToken = this.props.payload.body ? this.props.payload.body.hasOwnProperty('token') : false;
+    var statusText = this.props.payload.statusText.toLowerCase();
+    var statusCodeFirstChar = String(this.props.payload.status).charAt(0);
     var statusCodeClass = 'label status-code pull-right status-code-' + statusCodeFirstChar;
 
     return (
@@ -49,11 +34,15 @@ export default class Response extends React.Component {
           <div className="well well-default text-center">
             <button className="btn btn-sm btn-info" onClick={this.saveToken}>
               <i className="fa fa-key" /> Save Token
-          </button>
+            </button>
             <h6>Your token will be lost when you refresh the page.</h6>
           </div>
         ) : null}
       </div>
     );
   }
+};
+
+Response.propTypes = {
+  payload: React.PropTypes.any
 };

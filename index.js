@@ -11,7 +11,7 @@ export default class LiveAPIEndpoints extends React.Component {
 
     this.state = {
       url: props.url,
-      fields: props.endpoint.fields || [],
+      fields: props.fields || [],
       permissions: props.endpoint.permissions || [],
       selectedMethod: props.methods ? props.methods[0] : null,
       response: null
@@ -63,10 +63,9 @@ export default class LiveAPIEndpoints extends React.Component {
         <div className="modal-body">
           <div className="row">
             <Request
-              endpoint={this.state.endpoint}
               url={this.state.url}
-              fields={this.state.fields}
               permissions={this.state.permissions}
+              fields={this.state.fields}
               methods={this.props.methods}
               selectedMethod={this.state.selectedMethod}
               onSelectMethod={(value) => this.selectMethod(value)} />
@@ -84,5 +83,6 @@ export default class LiveAPIEndpoints extends React.Component {
 
 LiveAPIEndpoints.propTypes = {
   url: React.PropTypes.string.isRequired,
-  methods: React.PropTypes.array.isRequired
+  methods: React.PropTypes.array.isRequired,
+  fields: React.PropTypes.array.isRequired
 };
