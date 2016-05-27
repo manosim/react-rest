@@ -5,18 +5,20 @@ import RequestUtils from './src/utils/request';
 import Request from './src/components/request';
 import Response from './src/components/response';
 
-export default class LiveAPIEndpoints extends React.Component{
+export default class LiveAPIEndpoints extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      endpoint: this.props.endpoint,
+      url: props.url,
+      fields: props.fields || [],
+      permissions: props.endpoint.permissions || [],
+      selectedMethod: props.methods ? props.methods[0] : null,
       response: null
     };
   }
 
-  getData() {
-    var method = this.refs.request.state.selectedMethod;
+  getData(method) {
     return RequestUtils.shouldIncludeData(method) ? (
       this.refs.request.state.data
     ) : null;
@@ -26,17 +28,20 @@ export default class LiveAPIEndpoints extends React.Component{
     event.preventDefault();
 
     var self = this;
-    var request = this.refs.request.state;
+    // FIXME!
+    // const request = this.refs.request.state;
+    // const request = {};
+    const method = this.state.selectedMethod;
 
-    var headers = {};
-    if (this.refs.request.state.headers.authorization) {
-      headers['Authorization'] = this.refs.request.state.headers.authorization;
-    };
+    const headers = {};
+    // if (this.refs.request.state.headers.authorization) {
+    //   headers['Authorization'] = this.refs.request.state.headers.authorization;
+    // };
 
-    var data = this.getData();
+    var data = this.getData(method);
 
     // Now Make the Request
-    APIRequest(request.selectedMethod, request.endpoint.path)
+    superagent(method, this.state.url)
       .set(headers)
       .send(data)
       .end(function (err, res) {
@@ -46,17 +51,34 @@ export default class LiveAPIEndpoints extends React.Component{
       });
   }
 
+  handleUrlChange(value) {
+    this.setState({
+      url: value
+    });
+  }
+
+  selectMethod(value) {
+    this.setState({
+      selectedMethod: value
+    });
+  }
+
   render () {
     return (
-      <form className="form-horizontal" onSubmit={this.makeRequest}>
+      <form className="form-horizontal" onSubmit={(evt) => this.makeRequest(evt)}>
         <div className="modal-body">
           <div className="row">
-            <div className="col-md-6 request">
-              <Request endpoint={this.state.endpoint} ref='request' />
-            </div>
-            <div className="col-md-6 response">
-              <Response payload={this.state.response} />
-            </div>
+            <Request
+              url={this.state.url}
+              onUrlChange={(value) => this.handleUrlChange(value)}
+              permissions={this.state.permissions}
+              fields={this.state.fields}
+              methods={this.props.methods}
+              selectedMethod={this.state.selectedMethod}
+              onSelectMethod={(value) => this.selectMethod(value)} />
+
+            <Response
+              payload={this.state.response} />
           </div>
 
           <button type="submit" className="btn btn-primary">Send</button>
@@ -64,4 +86,10 @@ export default class LiveAPIEndpoints extends React.Component{
       </form>
     );
   }
+};
+
+LiveAPIEndpoints.propTypes = {
+  url: React.PropTypes.string.isRequired,
+  methods: React.PropTypes.array.isRequired,
+  fields: React.PropTypes.array.isRequired
 };

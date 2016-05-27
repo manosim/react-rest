@@ -3,12 +3,12 @@ var config = require('./webpack.config.js');
 
 config.devtool = 'source-map',
 
-config.entry = './demo/js/index.js',
+config.entry = './demo/src/js/index.js',
 
 config.output = {
   path: __dirname + '/demo/dist',
   filename: 'dist.js'
-}
+};
 
 config.plugins = config.plugins.concat([
   new webpack.DefinePlugin({
@@ -32,6 +32,6 @@ config.module.loaders = config.module.loaders.concat([
     test: /\.less$/,
     loader: 'style-loader!css-loader!less-loader'
   }
-])
+]);
 
 module.exports = config;

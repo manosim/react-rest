@@ -1,59 +1,48 @@
-var React = require('react');
+import React from 'react';
 
 var JSONpp = require('../utils/jsonpp');
 
-var Response = React.createClass({
+export default class Response extends React.Component {
+  saveToken() {
+    window.token = 'Token ' + this.props.payload.body.token;
+  }
 
-  getInitialState: function () {
-    return {
-      payload: this.props.payload,
-    };
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    this.setState({
-      payload: nextProps.payload
-    });
-  },
-
-  saveToken: function () {
-    window.token = 'Token ' + this.state.payload.body.token;
-  },
-
-  render: function () {
-    if (!this.state.payload) {
+  render() {
+    if (!this.props.payload) {
       return (
         <div>
           <h3>Response</h3>
-          <p className='lead text-center'>Awaiting request...</p>
+          <p className="lead text-center">Awaiting request...</p>
         </div>
       );
     }
 
-    var responseJSON = JSONpp.prettyPrint(this.state.payload.body);
-    var hasToken = this.state.payload.body ? this.state.payload.body.hasOwnProperty('token') : false;
-    var statusText = this.state.payload.statusText.toLowerCase();
-    var statusCodeFirstChar = String(this.state.payload.status).charAt(0);
+    var responseJSON = JSONpp.prettyPrint(this.props.payload.body);
+    var hasToken = this.props.payload.body ? this.props.payload.body.hasOwnProperty('token') : false;
+    var statusText = this.props.payload.statusText.toLowerCase();
+    var statusCodeFirstChar = String(this.props.payload.status).charAt(0);
     var statusCodeClass = 'label status-code pull-right status-code-' + statusCodeFirstChar;
 
     return (
-      <div>
+      <div className="col-md-6 response">
         <h3>Response <span className={statusCodeClass}>{this.props.payload.status}</span></h3>
 
-        <div><strong>Status</strong>: <span className='status-text'>{statusText}</span></div>
+        <div><strong>Status</strong>: <span className="status-text">{statusText}</span></div>
         <pre><code dangerouslySetInnerHTML={{__html: responseJSON}}></code></pre>
 
         {hasToken ? (
-          <div className='well well-default text-center'>
-            <button className='btn btn-sm btn-info' onClick={this.saveToken}>
-              <i className='fa fa-key' /> Save Token
-          </button>
+          <div className="well well-default text-center">
+            <button className="btn btn-sm btn-info" onClick={this.saveToken}>
+              <i className="fa fa-key" /> Save Token
+            </button>
             <h6>Your token will be lost when you refresh the page.</h6>
           </div>
         ) : null}
       </div>
     );
   }
-});
+};
 
-module.exports = Response;
+Response.propTypes = {
+  payload: React.PropTypes.any
+};

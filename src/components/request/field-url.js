@@ -1,39 +1,21 @@
-var React = require('react');
+import React from 'react';
 
-var Header = require('../helpers/header');
-var FieldText = require('../fields/text');
+import Header from '../helpers/header';
+import FieldText from '../fields/text';
 
-var FieldUrl = React.createClass({
+export default class FieldUrl extends React.Component {
 
-  getInitialState: function() {
-    return {
-      url: this.props.url
-    };
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    this.setState({
-      url: nextProps.url
-    });
-  },
-
-  handleChange: function (value) {
-    this.props.onChange(value);
-  },
-
-  render: function () {
+  render() {
     return (
       <div>
-        <Header title='API Endpoint' />
+        <Header title="API Endpoint" />
         <FieldText
-          type='text'
-          name='Url Endpoint'
-          value={this.state.url}
-          placeholder='Endpoint Url'
-          onChange={this.handleChange} />
+          type="text"
+          name="Url Endpoint"
+          value={this.props.url}
+          placeholder="Endpoint Url"
+          onChange={(value) => this.props.onChange(value)} />
       </div>
     );
   }
-});
-
-module.exports = FieldUrl;
+};

@@ -1,16 +1,22 @@
 require('../less/style.less');
 
-import React from 'react';
+import React from 'react'; //eslint-disable-line no-unused-vars
 import ReactDOM from 'react-dom';
 
-import LiveAPIEndpoints from '../../index';
+import LiveAPIEndpoints from '../../../index.js';
 
 const data = {
-  path: 'http://swapi.co/api/people/1/',
-  methods: ['GET'],
-  fields: []
+  permissions: []
 };
 
+const url = 'http://swapi.co/api/people/1/';
+const methods = ['GET', 'OPTIONS'];
+const fields = [];
+
 ReactDOM.render(
-  <LiveAPIEndpoints endpoint={data} />, document.getElementById('demo')
+  <LiveAPIEndpoints
+    url={url}
+    methods={methods}
+    fields={fields}
+    endpoint={data} />, document.getElementById('demo')
 );

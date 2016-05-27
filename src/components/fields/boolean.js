@@ -1,53 +1,55 @@
-var React = require('react');
+import React from 'react';
 
-var FieldBoolean = React.createClass({
-  getInitialState: function() {
-    return {
+export default class FieldBoolean extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       checked: null
     };
-  },
+  }
 
-  removeField: function (fieldName, event) {
+  removeField(fieldName, event) {
     event.preventDefault();
     this.props.removeField(fieldName);
-  },
+  }
 
-  handleChange: function (value) {
+  handleChange(value) {
     this.props.onChange(value);
-  },
+  }
 
-  isChecked: function (value) {
-    if (this.props.value === undefined) return;
+  isChecked(value) {
+    if (this.props.value === undefined) { return; }
     return this.props.value === value;
-  },
+  }
 
-  render: function () {
+  render() {
     var labelName = this.props.name.replace('_', ' ');
 
     return (
-      <div className='form-group'>
+      <div className="form-group">
         <label
           htmlFor={this.props.name}
-          className='col-sm-4 control-label'>
+          className="col-sm-4 control-label">
             {this.props.isCustom ? (
               <i
-                className='fa fa-minus-circle'
-                title='Remove Field'
+                className="fa fa-minus-circle"
+                title="Remove Field"
                 onClick={this.removeField.bind(this, this.props.name)} />
             ) : null}
             {labelName}
         </label>
-        <div className='col-sm-8'>
-          <label className='radio-inline'>
+        <div className="col-sm-8">
+          <label className="radio-inline">
             <input
-              type='radio'
+              type="radio"
               name={this.props.name}
               checked={this.isChecked(true)}
               onChange={this.handleChange.bind(this, true)} /> True
           </label>
-          <label className='radio-inline'>
+          <label className="radio-inline">
             <input
-              type='radio'
+              type="radio"
               name={this.props.name}
               checked={this.isChecked(false)}
               onChange={this.handleChange.bind(this, false)} /> False
@@ -56,6 +58,4 @@ var FieldBoolean = React.createClass({
       </div>
     );
   }
-});
-
-module.exports = FieldBoolean;
+};

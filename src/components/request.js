@@ -1,39 +1,39 @@
-var _ = require('underscore');
-var React = require('react');
+import _ from 'underscore';
+import React, { PropTypes } from 'react';
 
-var AddFieldsForm = require('./request/add-fields');
-var Headers = require('./request/headers');
-var Data = require('./request/data');
-var FieldUrl = require('./request/field-url');
-var Methods = require('./request/methods');
+import AddFieldsForm from './request/add-fields';
+import Headers from './request/headers';
+import Data from './request/data';
+import FieldUrl from './request/field-url';
+import Methods from './request/methods';
 
-var Request = React.createClass({
-  getInitialState: function () {
-    return {
+export default class Request extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       data: {},
       endpoint: null,
-      headers: {},
-      selectedMethod: null,
+      headers: {}
     };
-  },
+  }
 
-  componentWillMount: function() {
+  componentWillMount() {
     var endpoint = this.props.endpoint;
     var headers = this.state.headers;
     headers['authorization'] = window.token ? window.token : '';
 
     this.setState({
       endpoint: endpoint,
-      headers: headers,
-      selectedMethod: endpoint['methods'][0]
+      headers: headers
     });
-  },
+  }
 
-  addField: function (fieldName) {
+  addField(fieldName) {
     var endpoint = this.state.endpoint;
 
     // Check if field already exists
-    if (_.findWhere(endpoint.fields, {'name': fieldName})) return;
+    if (_.findWhere(endpoint.fields, {'name': fieldName})) { return; }
 
     endpoint.fields.push({
       name: fieldName,
@@ -45,9 +45,9 @@ var Request = React.createClass({
     this.setState({
       endpoint: endpoint
     });
-  },
+  }
 
-  removeField: function (fieldName) {
+  removeField(fieldName) {
     var data = this.state.data;
     var endpoint = this.state.endpoint;
     var fields = endpoint.fields;
@@ -60,73 +60,62 @@ var Request = React.createClass({
       data: data,
       endpoint: endpoint
     });
-  },
+  }
 
-  setSelectedMethod: function (method) {
-    this.setState({
-      selectedMethod: method
-    });
-  },
-
-  handleUrlChange: function (event) {
-    var endpoint = this.state.endpoint;
-    endpoint.path = event.target.value;
-
-    this.setState({
-      endpoint: endpoint
-    });
-  },
-
-  handleHeaderChange: function (value, fieldName) {
+  handleHeaderChange(value, fieldName) {
     var headers = this.state.headers;
     headers[fieldName] = value;
+
     this.setState({
       headers: headers
     });
-  },
+  }
 
-  handleDataFieldChange: function (value, fieldName) {
+  handleDataFieldChange(value, fieldName) {
     var data = this.state.data;
     data[fieldName] = value;
     this.setState({
       data: data
     });
-  },
+  }
 
-  render: function () {
-    var endpoint = this.state.endpoint;
-
+  render() {
     return (
-      <div>
+      <div className="col-md-6 request">
         <h3>Request</h3>
 
         <FieldUrl
-          name='urlEndpoint'
-          url={endpoint.path}
-          onChange={this.handleUrlChange} />
+          name="urlEndpoint"
+          url={this.props.url}
+          onChange={(evt) => this.props.onUrlChange(evt)} />
 
         <Methods
-          methods={this.state.endpoint.methods}
-          selectedMethod={this.state.selectedMethod}
-          setMethod={this.setSelectedMethod} />
+          methods={this.props.methods}
+          selectedMethod={this.props.selectedMethod}
+          setMethod={(value) => this.props.onSelectMethod(value)} />
 
         <Headers
           headers={this.state.headers}
-          permissions={this.state.endpoint.permissions}
+          permissions={this.props.permissions}
           handleHeaderChange={this.handleHeaderChange} />
 
         <Data
-          method={this.state.selectedMethod}
-          fields={endpoint.fields}
+          selectedMethod={this.props.selectedMethod}
+          fields={this.props.fields}
           data={this.state.data}
           removeCustomField={this.removeField}
           onChange={this.handleDataFieldChange} />
 
         <AddFieldsForm
+          selectedMethod={this.props.selectedMethod}
           onAdd={this.addField} />
       </div>
     );
   }
-});
+};
 
-module.exports = Request;
+Request.propTypes = {
+  onUrlChange: PropTypes.func.isRequired,
+  methods: PropTypes.array.isRequired,
+  selectedMethod: PropTypes.string.isRequired,
+};

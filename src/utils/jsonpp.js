@@ -6,10 +6,12 @@ module.exports = {
     var val = '<span class=json-value>';
     var str = '<span class=json-string>';
     var r = pIndent || '';
-    if (pKey)
+    if (pKey) {
       r = r + key + pKey.replace(/[": ]/g, '') + '</span>: ';
-    if (pVal)
-      r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
+    }
+    if (pVal) {
+      r = r + (pVal[0] === '"' ? str : val) + pVal + '</span>';
+    }
     return r + (pEnd || '');
   },
 

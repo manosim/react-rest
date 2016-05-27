@@ -1,46 +1,24 @@
-var React = require('react');
-var Header = require('../helpers/header');
+import React from 'react';
 
-var Methods = React.createClass({
+import Header from '../helpers/header';
 
-  getInitialState: function() {
-    return {
-      methods: [],
-      selectedMethod: null
-    };
-  },
-
-  componentWillMount: function() {
-    this.setState({
-      methods: this.props.methods,
-      selectedMethod: this.props.selectedMethod
-    });
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    this.setState({
-      methods: nextProps.methods,
-      selectedMethod: nextProps.selectedMethod
-    });
-  },
-
-  setMethod: function (value) {
+export default class Methods extends React.Component {
+  setMethod(value) {
+    // FIXME: Move to JSX
     this.props.setMethod(value);
-  },
+  }
 
-  render: function () {
+  render() {
     return (
-      <div className='text-center'>
-        <Header title='Method' />
-        <div className='btn-group methods'>
-          {this.state.methods.map(function (method, i) {
-            var methodClass = 'btn btn-sm method ' + method.toLowerCase() +
-              (this.state.selectedMethod == method ? ' active' : null);
+      <div className="text-center">
+        <Header title="Method" />
+        <div className="btn-group methods">
+          {this.props.methods.map(function (method, i) {
+            const methodClass = 'btn btn-sm method ' + method.toLowerCase() +
+              (this.props.selectedMethod === method ? ' active' : null);
             return (
               <button
-                key={i}
-                type='button'
-                className={methodClass}
+                key={i} type="button" className={methodClass}
                 onClick={this.setMethod.bind(this, method)}>{method}</button>
             );
           }, this)}
@@ -48,6 +26,9 @@ var Methods = React.createClass({
       </div>
     );
   }
-});
+};
 
-module.exports = Methods;
+Methods.propTypes = {
+  methods: React.PropTypes.array.isRequired,
+  selectedMethod: React.PropTypes.string.isRequired
+};
