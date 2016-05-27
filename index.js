@@ -10,13 +10,17 @@ export default class LiveAPIEndpoints extends React.Component{
     super(props);
 
     this.state = {
-      endpoint: this.props.endpoint,
+      // methods: this.props.endpoint,
+      url: this.props.endpoint.url,
+      methods: this.props.endpoint.methods || [],
+      fields: this.props.endpoint.fields || [],
+      permissions: this.props.endpoint.permissions || [],
+      selectedMethod: this.props.endpoint.methods ? this.props.endpoint.methods[0] : null,
       response: null
     };
   }
 
-  getData() {
-    var method = this.refs.request.state.selectedMethod;
+  getData(method) {
     return RequestUtils.shouldIncludeData(method) ? (
       this.refs.request.state.data
     ) : null;
@@ -26,17 +30,19 @@ export default class LiveAPIEndpoints extends React.Component{
     event.preventDefault();
 
     var self = this;
-    var request = this.refs.request.state;
+    // const request = this.refs.request.state;
+    const request = {};
+    const method = this.state.selectedMethod;
 
-    var headers = {};
-    if (this.refs.request.state.headers.authorization) {
-      headers['Authorization'] = this.refs.request.state.headers.authorization;
-    };
+    const headers = {};
+    // if (this.refs.request.state.headers.authorization) {
+    //   headers['Authorization'] = this.refs.request.state.headers.authorization;
+    // };
 
-    var data = this.getData();
+    var data = this.getData(method);
 
     // Now Make the Request
-    APIRequest(request.selectedMethod, request.endpoint.path)
+    APIRequest(method, this.state.url)
       .set(headers)
       .send(data)
       .end(function (err, res) {
@@ -46,13 +52,28 @@ export default class LiveAPIEndpoints extends React.Component{
       });
   }
 
+  selectMethod(value) {
+    console.log('SELECTED: ', value);
+
+    this.setState({
+      selectedMethod: value
+    });
+  }
+
   render () {
     return (
-      <form className="form-horizontal" onSubmit={this.makeRequest}>
+      <form className="form-horizontal" onSubmit={() => this.makeRequest()}>
         <div className="modal-body">
           <div className="row">
             <div className="col-md-6 request">
-              <Request endpoint={this.state.endpoint} ref='request' />
+              <Request
+                endpoint={this.state.endpoint}
+                url={this.state.url}
+                fields={this.state.fields}
+                methods={this.state.methods}
+                permissions={this.state.permissions}
+                selectedMethod={this.state.selectedMethod}
+                onSelectMethod={(value) => this.selectMethod(value)} />
             </div>
             <div className="col-md-6 response">
               <Response payload={this.state.response} />
