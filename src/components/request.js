@@ -62,15 +62,6 @@ export default class Request extends React.Component {
     });
   }
 
-  handleUrlChange(event) {
-    const endpoint = this.state.endpoint;
-    endpoint.url = event.target.value;
-
-    this.setState({
-      endpoint
-    });
-  }
-
   handleHeaderChange(value, fieldName) {
     var headers = this.state.headers;
     headers[fieldName] = value;
@@ -96,7 +87,7 @@ export default class Request extends React.Component {
         <FieldUrl
           name="urlEndpoint"
           url={this.props.url}
-          onChange={this.handleUrlChange} />
+          onChange={(evt) => this.props.onUrlChange(evt)} />
 
         <Methods
           methods={this.props.methods}
@@ -124,6 +115,7 @@ export default class Request extends React.Component {
 };
 
 Request.propTypes = {
+  onUrlChange: PropTypes.func.isRequired,
   methods: PropTypes.array.isRequired,
-  selectedMethod: PropTypes.string.isRequired
+  selectedMethod: PropTypes.string.isRequired,
 };

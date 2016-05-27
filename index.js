@@ -51,6 +51,12 @@ export default class LiveAPIEndpoints extends React.Component {
       });
   }
 
+  handleUrlChange(value) {
+    this.setState({
+      url: value
+    });
+  }
+
   selectMethod(value) {
     this.setState({
       selectedMethod: value
@@ -64,6 +70,7 @@ export default class LiveAPIEndpoints extends React.Component {
           <div className="row">
             <Request
               url={this.state.url}
+              onUrlChange={(value) => this.handleUrlChange(value)}
               permissions={this.state.permissions}
               fields={this.state.fields}
               methods={this.props.methods}

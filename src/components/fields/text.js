@@ -7,10 +7,6 @@ export default class FieldText extends React.Component {
     this.props.removeField(fieldName);
   }
 
-  handleChange(value) {
-    this.props.onChange(value);
-  }
-
   render() {
     const labelName = this.props.name.replace('_', ' ');
 
@@ -28,13 +24,14 @@ export default class FieldText extends React.Component {
             ) : null}
             {labelName}
         </label>
+
         <div className="col-sm-8">
           <input
             type={this.props.type}
             className="form-control input-sm"
             id={this.props.name}
             placeholder={this.props.placeholder}
-            onChange={this.handleChange}
+            onChange={(evt) => this.props.onChange(evt.target.value)}
             value={this.props.value}
             required={this.props.required} />
         </div>
