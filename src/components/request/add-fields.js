@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Header from '../helpers/header';
+import RequestUtils from '../../utils/request';
 
 export default class AddFieldsForm extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -35,6 +35,10 @@ export default class AddFieldsForm extends React.Component {
   }
 
   render() {
+    if (!RequestUtils.shouldIncludeData(this.props.selectedMethod)) {
+      return null;
+    }
+
     return (
       <div>
         <Header title="Add Extra Fields" />
@@ -50,6 +54,7 @@ export default class AddFieldsForm extends React.Component {
               onChange={this.handleChange}
               value={this.state.fieldName} />
           </div>
+
           <div className="col-sm-2">
             <button
               type="button"
@@ -62,4 +67,8 @@ export default class AddFieldsForm extends React.Component {
       </div>
     );
   }
+};
+
+AddFieldsForm.propTypes = {
+  selectedMethod: React.PropTypes.string.isRequired
 };

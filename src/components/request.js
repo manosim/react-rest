@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import AddFieldsForm from './request/add-fields';
 import Headers from './request/headers';
@@ -90,7 +90,7 @@ export default class Request extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="col-md-6 request">
         <h3>Request</h3>
 
         <FieldUrl
@@ -109,15 +109,21 @@ export default class Request extends React.Component {
           handleHeaderChange={this.handleHeaderChange} />
 
         <Data
-          method={this.state.selectedMethod}
+          selectedMethod={this.props.selectedMethod}
           fields={this.props.fields}
           data={this.state.data}
           removeCustomField={this.removeField}
           onChange={this.handleDataFieldChange} />
 
         <AddFieldsForm
+          selectedMethod={this.props.selectedMethod}
           onAdd={this.addField} />
       </div>
     );
   }
+};
+
+Request.propTypes = {
+  methods: PropTypes.array.isRequired,
+  selectedMethod: PropTypes.string.isRequired
 };

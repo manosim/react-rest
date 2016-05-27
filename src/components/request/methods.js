@@ -3,31 +3,8 @@ import React from 'react';
 import Header from '../helpers/header';
 
 export default class Methods extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      methods: [],
-      selectedMethod: null
-    };
-  }
-
-  componentWillMount() {
-    this.setState({
-      methods: this.props.methods,
-      selectedMethod: this.props.selectedMethod
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      methods: nextProps.methods,
-      selectedMethod: nextProps.selectedMethod
-    });
-  }
-
   setMethod(value) {
+    // FIXME: Move to JSX
     this.props.setMethod(value);
   }
 
@@ -36,14 +13,12 @@ export default class Methods extends React.Component {
       <div className="text-center">
         <Header title="Method" />
         <div className="btn-group methods">
-          {this.state.methods.map(function (method, i) {
+          {this.props.methods.map(function (method, i) {
             const methodClass = 'btn btn-sm method ' + method.toLowerCase() +
-              (this.state.selectedMethod === method ? ' active' : null);
+              (this.props.selectedMethod === method ? ' active' : null);
             return (
               <button
-                key={i}
-                type="button"
-                className={methodClass}
+                key={i} type="button" className={methodClass}
                 onClick={this.setMethod.bind(this, method)}>{method}</button>
             );
           }, this)}
@@ -51,4 +26,9 @@ export default class Methods extends React.Component {
       </div>
     );
   }
+};
+
+Methods.propTypes = {
+  methods: React.PropTypes.array.isRequired,
+  selectedMethod: React.PropTypes.string.isRequired
 };

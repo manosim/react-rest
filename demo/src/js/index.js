@@ -6,12 +6,16 @@ import ReactDOM from 'react-dom';
 import LiveAPIEndpoints from '../../../index.js';
 
 const data = {
-  url: 'http://swapi.co/api/people/1/',
-  methods: ['GET', 'OPTIONS'],
   fields: [],
   permissions: []
 };
 
+const url = 'http://swapi.co/api/people/1/';
+const methods = ['GET', 'OPTIONS'];
+
 ReactDOM.render(
-  <LiveAPIEndpoints endpoint={data} />, document.getElementById('demo')
+  <LiveAPIEndpoints
+    url={url}
+    methods={methods}
+    endpoint={data} />, document.getElementById('demo')
 );

@@ -10,11 +10,10 @@ export default class LiveAPIEndpoints extends React.Component {
     super(props);
 
     this.state = {
-      url: props.endpoint.url,
-      methods: props.endpoint.methods || [],
+      url: props.url,
       fields: props.endpoint.fields || [],
       permissions: props.endpoint.permissions || [],
-      selectedMethod: props.endpoint.methods ? props.endpoint.methods[0] : null,
+      selectedMethod: props.methods ? props.methods[0] : null,
       response: null
     };
   }
@@ -63,20 +62,17 @@ export default class LiveAPIEndpoints extends React.Component {
       <form className="form-horizontal" onSubmit={(evt) => this.makeRequest(evt)}>
         <div className="modal-body">
           <div className="row">
-            <div className="col-md-6 request">
-              <Request
-                endpoint={this.state.endpoint}
-                url={this.state.url}
-                fields={this.state.fields}
-                methods={this.state.methods}
-                permissions={this.state.permissions}
-                selectedMethod={this.state.selectedMethod}
-                onSelectMethod={(value) => this.selectMethod(value)} />
-            </div>
+            <Request
+              endpoint={this.state.endpoint}
+              url={this.state.url}
+              fields={this.state.fields}
+              permissions={this.state.permissions}
+              methods={this.props.methods}
+              selectedMethod={this.state.selectedMethod}
+              onSelectMethod={(value) => this.selectMethod(value)} />
 
-            <div className="col-md-6 response">
-              <Response payload={this.state.response} />
-            </div>
+            <Response
+              payload={this.state.response} />
           </div>
 
           <button type="submit" className="btn btn-primary">Send</button>
@@ -84,4 +80,9 @@ export default class LiveAPIEndpoints extends React.Component {
       </form>
     );
   }
+};
+
+LiveAPIEndpoints.propTypes = {
+  url: React.PropTypes.string.isRequired,
+  methods: React.PropTypes.array.isRequired
 };

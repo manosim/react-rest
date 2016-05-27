@@ -39,7 +39,7 @@ export default class Response extends React.Component {
     var statusCodeClass = 'label status-code pull-right status-code-' + statusCodeFirstChar;
 
     return (
-      <div>
+      <div className="col-md-6 response">
         <h3>Response <span className={statusCodeClass}>{this.props.payload.status}</span></h3>
 
         <div><strong>Status</strong>: <span className="status-text">{statusText}</span></div>

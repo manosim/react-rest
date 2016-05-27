@@ -66,7 +66,7 @@ export default class Data extends React.Component {
   }
 
   render() {
-    if (!RequestUtils.shouldIncludeData(this.props.method)) {
+    if (!RequestUtils.shouldIncludeData(this.props.selectedMethod)) {
       return null;
     }
 
@@ -77,4 +77,8 @@ export default class Data extends React.Component {
       </div>
     );
   }
+};
+
+Data.propTypes = {
+  selectedMethod: React.PropTypes.string.isRequired
 };

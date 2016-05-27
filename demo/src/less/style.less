@@ -70,23 +70,39 @@
 /* @group Bootstrap Overrides */
 
 @navbar-border-radius: 0;
+
 @jumbotron-padding: 10px;
+@jumbotron-bg: lighten(@gray-base, 96.5%);;
 
 /* @end Bootstrap Overrides */
 
 
-/* @group Jumbotron */
+/* @group Mixins */
 
-// .jumbotron {
-//   margin-top: 80px;
-// }
+// Border Radius (Same Corners)
+.BorderRadius(@radius: 5px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius:    @radius;
+    border-radius:         @radius;
 
-/* @end Jumbotron */
+    -moz-background-clip:    padding;
+    -webkit-background-clip: padding-box;
+    background-clip:         padding-box;
+}
+
+/* @end Mixins */
 
 
 /* @group Request */
 
 .request {
+
+  .section-title {
+    background-color: @gray-lighter;
+    text-align: center;
+    padding: 5px;
+    .BorderRadius(3px);
+  }
 
   .method {
      &.get { background-color: @GetColor; }
